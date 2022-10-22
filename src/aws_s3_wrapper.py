@@ -1,11 +1,14 @@
 import os
+from urllib.parse import urlparse
+
 import boto3
 
 
 def __split_s3_path(path):
     
-    bucket, key = path.replace('s3://', '').split('/', 1)
-    key = key.rstrip('/')
+    o = urlparse(path)
+    bucket = o.hostname
+    key = o.path.lstrip('/').rstrip('/')
     
     return bucket, key
 
