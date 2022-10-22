@@ -43,28 +43,22 @@ def up_csv():
     print(df_data)
     
     save_path = 'test.csv'
-    df_data.to_csv(save_path, encoding='utf_8_sig')
+    df_data.to_csv(save_path, encoding='utf_8_sig', index=False)
 
     s3_path = 's3://example-2022-1022'
     s3.upload_file(s3_path, save_path)
 
-def dl_and_open_csv_in_memory():
-    print('in')
-
-    with io.BytesIO() as fp:
-        src_path = 's3://example-2022-1022/test.csv'
-        s3.download_fileobj(fp, src_path)
-        
-        binary = fp.getvalue()
-        print(binary)
-        #s = str(binary, encoding='utf-8', errors='replace')
-        s = str(binary, encoding='utf-8', errors='replace')
-        print(s)
-        df_tmp = pd.read_csv(io.StringIO(s))
-        print(df_tmp)
-
+def dl_and_use_aws_s3_data_in_memory():
     
+    src_path = 's3://example-2022-1022/test.csv'
+    s = s3.download_as_str(src_path, encoding='utf-8')
+    print(s)
+    print()
+    
+    df_tmp = pd.read_csv(io.StringIO(s))
+    print(df_tmp)
 
 #up_csv()
-dl_and_open_csv_in_memory()
+#dl_and_open_csv_in_memory()
+dl_and_use_aws_s3_data_in_memory()
 

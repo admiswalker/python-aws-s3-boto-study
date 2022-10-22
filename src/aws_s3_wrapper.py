@@ -1,3 +1,4 @@
+import io
 import os
 from urllib.parse import urlparse
 
@@ -48,5 +49,22 @@ def download_fileobj(fp, src_path):
     s3 = boto3.client('s3')
     s3.download_fileobj(bucket, key, fp)
     
-    return 
+    return
+
+def download_as_bin(src_path):
+    
+    binary = ''
+    with io.BytesIO() as fp:
+        download_fileobj(fp, src_path)
+        binary = fp.getvalue()
+        
+    return binary
+
+def download_as_str(src_path, encoding):
+
+    binary = download_as_bin(src_path)
+    
+    s = str(binary, encoding=encoding, errors='replace')
+    
+    return s
 
