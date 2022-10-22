@@ -9,9 +9,7 @@ import src.aws_s3_wrapper as s3
 import src.file as fl
 
 
-def main():
-    print('hello')
-
+def main_up():
     tmp_dir = './tmp'
     os.makedirs(tmp_dir, exist_ok=True)
 
@@ -23,28 +21,17 @@ def main():
     fl.write(tmp_dir+'/'+f_name, s)
 
     src_path = tmp_dir+'/'+f_name
-    dst_path = 's3://example-2022-1022/ex_dir/ex_dir2'
+    dst_path = 's3://example-2022-1022/ex_dir/'
     s3.upload_file(dst_path, src_path)
     
-def test():
-    s = 's3://example-2022-1022/ex_dir/ex_dir2/abc.txt'
-    #s = 's3://example-2022-1022/ex_dir/ex_dir2/'
-    s = 's3://example-2022-1022/ex_dir/ex_dir2'
+def main_dl():
+    print('hello')
     
-    #bucket, key = s.replace("s3://", "").split("/", 1)
-    bucket, key = s.replace("s3://", "").split("/", 1)
-    key = key.rstrip('/')
-    print(bucket)
-    print(key)
+    src_path = 's3://example-2022-1022/ex_dir/test_20221022_2306_22.txt'
+    dst_path = './tmp_dl/abc/'
+    s3.download_file(dst_path, src_path)
 
-    #o = urlparse('s3://bucket_name/folder1/folder2/file1.json', allow_fragments=False)
-    o = urlparse(s, allow_fragments=False)
-    print(o.netloc)
-    print(o.path)
 
-    r = os.path.dirname(s)
-    print(r)
-
-main()
-#test()
+#main_up()
+#main_dl()
 
