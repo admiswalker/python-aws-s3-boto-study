@@ -30,7 +30,7 @@ def main_dl():
     dst_path = './tmp_dl/abc/'
     s3.download_file(dst_path, src_path)
 
-#main_up()
+main_up()
 #main_dl()
 
 
@@ -49,74 +49,4 @@ def main():
     s3.upload_file(s3_path, save_path)
 
 #main()
-
-
-from urllib.parse import urlparse
-
-def test():
-    print('in test')
-
-    s3_path = 's3://example-2022-1022/ex_dir/example.txt'
-    o = urlparse(s3_path)
-    print(o.hostname)
-    print(o.path)
-    print()
-
-    s3_path = 's3://example-2022-1022/ex_dir/'
-    o = urlparse(s3_path)
-    print(o.hostname)
-    print(o.path)
-    print()
-
-    s3_path = 's3://example-2022-1022/ex_dir'
-    o = urlparse(s3_path)
-    print(o.hostname)
-    print(o.path)
-    print()
-
-    s3_path = 's3://example-2022-1022/'
-    o = urlparse(s3_path)
-    print(o.hostname)
-    print(o.path)
-    print()
-
-    s3_path = 's3://example-2022-1022'
-    o = urlparse(s3_path)
-    print(o.hostname)
-    print(o.path)
-    print()
-
-def test2():
-    s3_path = 's3://example-2022-1022/ex_dir/example.txt'
-    bucket, key = s3.__split_s3_path(s3_path)
-    print(bucket)
-    print(key)
-    print()
-    
-    s3_path = 's3://example-2022-1022/ex_dir/'
-    bucket, key = s3.__split_s3_path(s3_path)
-    print(bucket)
-    print(key)
-    print()
-    
-    s3_path = 's3://example-2022-1022/ex_dir'
-    bucket, key = s3.__split_s3_path(s3_path)
-    print(bucket)
-    print(key)
-    print()
-    
-    s3_path = 's3://example-2022-1022/'
-    bucket, key = s3.__split_s3_path(s3_path)
-    print(bucket)
-    print(key)
-    print()
-    
-    s3_path = 's3://example-2022-1022'
-    bucket, key = s3.__split_s3_path(s3_path)
-    print(bucket)
-    print(key)
-    print()
-
-#test()
-#test2()
 

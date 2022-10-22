@@ -34,3 +34,15 @@ def test___split_s3_path_case05():
     assert(bucket=='example-2022-1022')
     assert(key=='')
 
+def test___join_keyBase_fileName_case01():
+    key_base = 'dir01/dir02'
+    file_name = 'example.txt'
+    key = s3.__join_keyBase_fileName(key_base, file_name)
+    assert(key=='dir01/dir02/example.txt')
+
+def test___join_keyBase_fileName_case02():
+    key_base = ''
+    file_name = 'example.txt'
+    key = s3.__join_keyBase_fileName(key_base, file_name)
+    assert(key=='example.txt')
+

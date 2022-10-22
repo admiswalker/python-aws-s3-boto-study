@@ -12,15 +12,21 @@ def __split_s3_path(path):
     
     return bucket, key
 
+def __join_keyBase_fileName(key_base, file_name):
+    key = key_base+'/'+file_name if len(key_base)>0 else file_name
+    return key
+
 def upload_file(dst_path, src_path):
     
-    bucket, key = __split_s3_path(dst_path)
+    bucket, key_base = __split_s3_path(dst_path)
     file_name = os.path.basename(src_path)
     
-    s3 = boto3.client('s3')
-    s3.upload_file(src_path, bucket, key+'/'+file_name)
+    key = __join_keyBase_fileName(key_base, file_name)
     
-    return 
+    s3 = boto3.client('s3')
+    s3.upload_file(src_path, bucket, key)
+    
+    return
 
 def download_file(dst_path, src_path):
     os.makedirs(dst_path, exist_ok=True)
