@@ -30,11 +30,11 @@ def main_dl():
     dst_path = './tmp_dl/abc/'
     s3.download_file(dst_path, src_path)
 
-main_up()
+#main_up()
 #main_dl()
 
 
-def main():
+def up_csv():
     print('in main()')
     
     df_data = pd.DataFrame([[111, 'aaa', 100, 123, 987],
@@ -48,5 +48,23 @@ def main():
     s3_path = 's3://example-2022-1022'
     s3.upload_file(s3_path, save_path)
 
-#main()
+def dl_and_open_csv_in_memory():
+    print('in')
+
+    with io.BytesIO() as fp:
+        src_path = 's3://example-2022-1022/test.csv'
+        s3.download_fileobj(fp, src_path)
+        
+        binary = fp.getvalue()
+        print(binary)
+        #s = str(binary, encoding='utf-8', errors='replace')
+        s = str(binary, encoding='utf-8', errors='replace')
+        print(s)
+        df_tmp = pd.read_csv(io.StringIO(s))
+        print(df_tmp)
+
+    
+
+#up_csv()
+dl_and_open_csv_in_memory()
 

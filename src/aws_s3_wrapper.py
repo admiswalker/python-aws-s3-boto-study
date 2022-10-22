@@ -40,3 +40,13 @@ def download_file(dst_path, src_path):
     
     return 
 
+def download_fileobj(fp, src_path):
+    
+    bucket, key = __split_s3_path(src_path)
+    file_name = os.path.basename(src_path)
+    
+    s3 = boto3.client('s3')
+    s3.download_fileobj(bucket, key, fp)
+    
+    return 
+
