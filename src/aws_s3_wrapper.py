@@ -29,6 +29,22 @@ def upload_file(dst_path, src_path):
     
     return
 
+def upload_fileobj(dst_path, bin_obj):
+    
+    bucket, key = __split_s3_path(dst_path)
+    
+    s3 = boto3.client('s3')
+    s3.upload_fileobj(bin_obj, bucket, key)
+    
+    return
+
+def upload_str(dst_path, s, encoding):
+
+    bin_obj = io.BytesIO(bytes(s, encoding=encoding))
+    upload_fileobj(dst_path, bin_obj)
+    
+    return
+
 def download_file(dst_path, src_path):
     os.makedirs(dst_path, exist_ok=True)
     
@@ -53,12 +69,12 @@ def download_fileobj(fp, src_path):
 
 def download_as_bin(src_path):
     
-    binary = ''
+    bin_obj = ''
     with io.BytesIO() as fp:
         download_fileobj(fp, src_path)
-        binary = fp.getvalue()
+        bin_obj = fp.getvalue()
         
-    return binary
+    return bin_obj
 
 def download_as_str(src_path, encoding):
 

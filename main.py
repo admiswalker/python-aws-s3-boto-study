@@ -35,8 +35,6 @@ def main_dl():
 
 
 def up_csv():
-    print('in main()')
-    
     df_data = pd.DataFrame([[111, 'aaa', 100, 123, 987],
                             [222, 'bbb', 200, 321, 777]],
                            columns=['user_id', 'user_name', 'param_1', 'param_2', 'param_3'])
@@ -48,7 +46,18 @@ def up_csv():
     s3_path = 's3://example-2022-1022'
     s3.upload_file(s3_path, save_path)
 
-def dl_and_use_aws_s3_data_in_memory():
+def up_csv_in_memory():
+    df_data = pd.DataFrame([[111, 'aaa', 100, 123, 987],
+                            [222, 'bbb', 200, 321, 777]],
+                           columns=['user_id', 'user_name', 'param_1', 'param_2', 'param_3'])
+    print(df_data)
+    print(df_data.to_csv(index=False))
+    s = df_data.to_csv(index=False)
+    
+    save_path = 's3://example-2022-1022/test.csv'
+    s3.upload_str(save_path, s, encoding='utf-8')
+
+def dl_csv_in_memory():
     
     src_path = 's3://example-2022-1022/test.csv'
     s = s3.download_as_str(src_path, encoding='utf-8')
@@ -57,6 +66,7 @@ def dl_and_use_aws_s3_data_in_memory():
     print(df_tmp)
 
 #up_csv()
+up_csv_in_memory()
 #dl_and_open_csv_in_memory()
-dl_and_use_aws_s3_data_in_memory()
+#dl_csv_in_memory()
 
