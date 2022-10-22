@@ -52,8 +52,6 @@ def dl_and_use_aws_s3_data_in_memory():
     
     src_path = 's3://example-2022-1022/test.csv'
     s = s3.download_as_str(src_path, encoding='utf-8')
-    print(s)
-    print()
     
     df_tmp = pd.read_csv(io.StringIO(s))
     print(df_tmp)
